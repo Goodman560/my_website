@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Premium Store | Online Shopping</title>
+
+    <style>
+        /* ===== GENERAL SETTINGS ===== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f6fa;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            font: inherit;
+        }
+
+        /* ===== HEADER ===== */
+
+        header {
+            background-color: #111827;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a:hover {
+            color: #fbbf24;
+        }
+
+        .cart-button {
+            background-color: #fbbf24;
+            color: #111827;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* ===== HERO SECTION ===== */
+
+        .hero {
+            min-height: 350px;
+            padding: 70px 7%;
+            background: linear-gradient(135deg, #111827, #374151);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 550px;
+            margin-bottom: 25px;
+            color: #e5e7eb;
+        }
+
+        .hero button {
+            background-color: #fbbf24;
+            color: #111827;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+
+        .container {
+            padding: 50px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        /* ===== SEARCH AND FILTER ===== */
+
+        .tools {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tools input,
+        .tools select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            font-size: 15px;
+        }
+
+        .tools input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        /* ===== PRODUCT GRID ===== */
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 190px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5e7eb;
+            font-size: 65px;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+       }
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            margin-bottom: 8px;
+        }
+
+        .category {
+            color: #6b7280;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .description {
+            color: #666;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #111827;
+        }
+
+        .add-button {
+            width: 100%;
+            padding: 11px;
+            background-color: #111827;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .add-button:hover {
+            background-color: #374151;
+        }
+
+        .empty-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+
+        .about {
+            background-color: white;
+            padding: 45px 7%;
+            text-align: center;
+        }
+
+        .about p {
+            max-width: 700px;
+            margin: 15px auto;
+            color: #666;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+
+        .contact {
+            padding: 45px 7%;
+            text-align: center;
+        }
+
+        .contact p {
+            margin: 10px 0;
+        }
+
+        /* ===== FOOTER ===== */
+
+        footer {
+            background-color: #111827;
+            color: white;
+            text-align: center;
+            padding: 22px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+
+        @media (max-width: 850px) {
+            .products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 550px) {
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 50px 7%;
+            }
+
+            .container {
+                padding: 35px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="logo">PREMIUM STORE</a>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#product">Cigar, Cigarettes and vapes</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="cart-button" id="cartButton">
+            Cart (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <h1>Discover Quality Products</h1>
+
+        <p>
+            Explore our collections, discover new products
+            and enjoy a simple shopping experience.
+        </p>
+
+        <button id="exploreButton">Explore Products</button>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <main class="container" id="product">
+
+        <div class="section-title">
+            <h2>Our Products</h2>
+            <p>Discover our latest collections.</p>
+        </div>
+
+        <!-- SEARCH AND FILTER -->
+        <div class="tools">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search products..."
+                aria-label="Search products"
+            >
+
+            <select id="categoryFilter" aria-label="Filter by category">
+                <option value="all">All Categories</option>
+                <option value="cigars">Cigars</option>
+                <option value="cigarettes">Cigarettes</option>
+                <option value="vapes">Vapes</option>
+            </select>
+        </div>
+
+        <!-- PRODUCTS ARE INSERTED HERE BY JAVASCRIPT -->
+        <div class="products" id="productList"></div>
+
+    </main>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <h2>About Us</h2>
+
+        <p>
+            Premium Store is a demonstration website shopping
+            created to explore product presentation and online shopping features.
+            Our goal is to offer visitors a clear and user-friendly
+            browsing experience.
+        </p>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+
+        <p>Have a question? Get in touch with us.</p>
+        <p>Email: goodmanreally@gmail.com</p>
+        <p>Location: Bujumbura, Burundi</p>
+        <p>Phone: +257 79 304 171</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            &copy; <span id="year"></span> Premium Store.
+            All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        // ===== PRODUCT DATA =====
+
+        const products = [
+            {
+                id: 1,
+                name: "Malboro premium",
+                category: "cigarettes",
+                price: 35,
+                image: "Malboro premium.png",
+                description: "A practical backpack for everyday use."
+            },
+            {
+                id: 2,
+                name: "Phillies Blunt",
+                category: "cigars",
+                price: 50,
+                image: "Phillies Blunt.png",
+                description: "Enjoy your favorite music anywhere."
+            },
+            {
+                id: 3,
+                name: "Dunhill Green",
+                category: "cigarettes",
+                price: 40,
+                image: "Dunhill Green.png",
+                description: "IN your sat in green nature feeling it."
+            },
+            {
+                id: 4,
+                name: "Balmoral Dominican Corona Cigar",
+                category: "cigars",
+                price: 25,
+                image: "Balmoral Dominican Corona Cigar2.png", 
+                description: "A flavorful cigar for enthusiasts."
+            },
+            {
+                id: 5,
+                name: "king Edward",
+                category: "cigars",
+                price: 60,
+                image: "king Edward.png",
+                description: "Listen to music at home or outdoors."
+            },
+            {
+                id: 6,
+                name: "Marlboro2",
+                category: "cigarettes",
+                price: 15,
+                image: "Malboro2.png", 
+                description: "A reusable mug for your daily routine."
+            },
+            {
+                id: 7,
+                name: "ELFBAR PRIME Disposable Vape",
+                category: "vapes",
+                price: 15,
+                image: "ELFBAR PRIME Disposable Vape.png", 
+                description: "A reusable mug for your daily routine."
+            },
+            {
+                id: 8,
+                name: "TUGBOAT EVO 4500 PUFFS DISPOSABLE VAPE",
+                category: "vapes",
+                price: 15,
+                image: "TUGBOAT EVO 4500 PUFFS DISPOSABLE VAPE.png", 
+                description: "A reusable mug for your daily routine."
+            },    
+        
+             {
+                id: 9,
+                name: "pineapple ice vape ",
+                category: "vapes",
+                price: 15,
+                image: "pineapple ice vape .png", 
+                description: "A reusable mug for your daily routine."
+            }    
+        ];
+            
+        // ===== SELECT HTML ELEMENTS ===== 
+
+        const productList = document.getElementById("productList");
+
+        const searchInput = document.getElementById("searchInput");
+
+        const categoryFilter = 
+            document.getElementById("categoryFilter");
+
+        const cartButton = document.getElementById("cartButton");
+
+        const cartCount = document.getElementById("cartCount");
+
+        const exploreButton = 
+            document.getElementById("exploreButton");
+
+        // ===== SHOPPING CART =====
+
+        let cart = [];
+
+        // ===== DISPLAY PRODUCTS =====
+
+        function displayProducts(items) {
+
+            productList.innerHTML = "";
+
+            if (items.length === 0) {
+                productList.innerHTML =
+                    '<p class="empty-message">No products found.</p>';
+
+                return;
+            }
+
+            items.forEach(function(product) {
+
+                const card = document.createElement("article");
+
+                card.className = "product-card";
+
+                card.innerHTML = `
+            <div class="product-image">
+                  ${
+                product.image
+                ? `<img src="${product.image}" alt="${product.name}">`
+               : product.icon
+                }
+            </div>
+                    <div class="product-info">
+                        <p class="category">${product.category}</p>
+
+                        <h3>${product.name}</h3>
+
+                        <p class="description">
+                            ${product.description}
+                        </p>
+
+                        <p class="price">$${product.price.toFixed(2)}</p>
+
+                        <button
+                            class="add-button"
+                            data-id="${product.id}"
+                        >
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+
+                productList.appendChild(card);
+            });
+        }
+
+        // ===== SEARCH AND FILTER =====
+
+        function filterProducts() {
+
+            const searchTerm =
+                searchInput.value.toLowerCase().trim();
+
+            const selectedCategory = categoryFilter.value;
+
+            const filteredProducts = products.filter(function(product) {
+
+                const matchesName =
+                    product.name.toLowerCase().includes(searchTerm);
+
+                const matchesCategory =
+                    selectedCategory === "all" ||
+                    product.category === selectedCategory;
+
+                return matchesName && matchesCategory;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        searchInput.addEventListener("input", filterProducts);
+
+        categoryFilter.addEventListener("change", filterProducts);
+
+        // ===== ADD PRODUCTS TO CART =====
+
+       productList.addEventListener("click", function(event) {
+    const button = event.target.closest(".add-button");
+
+    if (!button) {
+        return;
+    }
+
+    const productId = Number(button.dataset.id);
+    const selectedProduct = products.find(function(product) {
+        return product.id === productId;
+    });
+
+    if (selectedProduct) {
+    sessionStorage.setItem(
+        "selectedProduct",
+        JSON.stringify(selectedProduct)
+    );
+    window.location.href = "paiement.html";
+}
+});
+
+        // ===== VIEW DEMONSTRATION CART =====
+
+        cartButton.addEventListener("click", function() {
+
+            if (cart.length === 0) {
+                alert("Your cart is empty.");
+
+                return;
+            }
+
+            const cartDetails = cart.map(function(product) {
+                return product.name + " - $" + product.price.toFixed(2);
+            });
+
+            const total = cart.reduce(function(sum, product) {
+                return sum + product.price;
+            }, 0);
+
+            alert(
+                "YOUR CART\n\n" +
+                cartDetails.join("\n") +
+                "\n\nTotal: $" + total.toFixed(2) +
+                "\n\nThis is a demonstration cart. No payment is processed."
+            );
+        });
+
+        // ===== EXPLORE BUTTON =====
+
+        exploreButton.addEventListener("click", function() {
+
+            document.getElementById("product").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+
+        // ===== DISPLAY CURRENT YEAR =====
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        // ===== INITIALIZE WEBSITE =====
+
+        displayProducts(products);
+    </script>
+
+</body>
+</html>
+```
